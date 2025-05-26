@@ -1,12 +1,15 @@
 import React from 'react'
-import { useDeleteBranchMutation, useGetbranchesQuery, useLazyGetbranchesQuery } from '../services/schoolApi'
+import { useDeleteBranchMutation, useGetbranchesQuery, useGetcustomerCareQuery, useLazyGetbranchesQuery } from '../services/schoolApi'
 import { Link, useAsyncError } from 'react-router-dom';
 import Zonalofficerdetails from './Zonalofficers/zonalofficerdetails';
 import { useGetzonalofficerdetailsQuery } from '../services/schoolZonalApi';
+import { current } from '@reduxjs/toolkit';
 
 function Home() {
     var {isLoading,data} = useGetbranchesQuery();
     var {isLoading:zloading,data:zonaldata} = useGetzonalofficerdetailsQuery()
+    var {isLoading:cloading,data:Customerdata}=useGetcustomerCareQuery()
+    console.log("customerdata:",Customerdata)
     var [delbranchFn] = useDeleteBranchMutation();
     var [lazyfn]=useLazyGetbranchesQuery()
     const role = localStorage.getItem('role');
@@ -26,7 +29,7 @@ function Home() {
             <div className="card  border-0  mb-4">
                 <div className="card-body text-center ">
                     <i className="bi bi-mortarboard-fill display-3 mb-3"></i>
-                    <h2 className="mb-2 ">School Administration Dashboard</h2>
+                    <h2 className="mb-2 "> Administration Dashboard</h2>
                     <p className="lead mb-0 ">Branch & Zonal Management System</p>
                 </div>
             </div>
@@ -43,6 +46,7 @@ function Home() {
                                 <div className="ms-3">
                                     <h6 className="text-info mb-1">Total Branches</h6>
                                     <h2 className="mb-0">{data?.length || 0}</h2>
+                                    <Link to="/branchdetails" className="text-info"><i className='b'  /></Link>
                                 </div>
                             </div>
                         </div>
@@ -57,7 +61,7 @@ function Home() {
                                 </div>
                                 <div className="ms-3">
                                     <h6 className="text-success mb-1">Customer Care</h6>
-                                    <h2 className="mb-0">{0|| 0}</h2>
+                                    <h2 className="mb-0">{Customerdata && Customerdata?.data.length || 0}</h2>
                                 </div>
                             </div>
                         </div>

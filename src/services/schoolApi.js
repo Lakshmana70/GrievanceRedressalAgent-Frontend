@@ -3,11 +3,18 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const schoolApi = createApi({
   reducerPath: 'schoolApi',
-  // baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:4600/branches' }),
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://bhashyam-backend-production.up.railway.app/branches' }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:4600/branches' }),
+  // baseQuery: fetchBaseQuery({ baseUrl: 'https://bhashyam-backend-production.up.railway.app/branches' }),
   endpoints: (builder) => ({
     getbranches: builder.query({
       query: () => `/`,
+    }),
+    getcustomerCare:builder.query({
+      query: () => ({
+        url: '/customercare',
+        method: 'GET',
+       
+      })
     }),
     addBranch : builder.mutation({
         query : (branch) =>({
@@ -73,4 +80,5 @@ export const { useGetbranchesQuery,
   useDeleteBranchMutation,
   useUpdatebranchMutation,
   useLazyGetbranchesQuery,
+  useGetcustomerCareQuery,
   useAddcustomerCareMutation } = schoolApi;   
